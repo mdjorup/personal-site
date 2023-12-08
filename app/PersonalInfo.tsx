@@ -30,6 +30,14 @@ const PersonalInfo = () => {
                     LinkedIn
                 </a>
             </div>
+            <div className="mt-4">
+                <h2 className="text-lg font-semibold text-gray-800 mb-4">
+                    About Me
+                </h2>
+                <p className="text-gray-700">
+                    This is a short bio about yourself...
+                </p>
+            </div>
         </div>
     );
 };
