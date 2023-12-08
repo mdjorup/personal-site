@@ -1,6 +1,6 @@
 const Bio = () => {
     return (
-        <div className="bg-gray-100 shadow-md rounded-lg p-6 m-6">
+        <div className="bg-gray-100  p-6 m-6">
             <h2 className="text-xl font-semibold text-gray-800 mb-4">
                 About Me
             </h2>

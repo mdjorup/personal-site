@@ -1,6 +1,6 @@
 const PersonalInfo = () => {
     return (
-        <div className="bg-white shadow-lg rounded-lg p-6 m-6">
+        <div className="bg-white p-6 m-6">
             <h1 className="text-2xl font-bold text-gray-800 mb-2">
                 Michael Djorup
             </h1>

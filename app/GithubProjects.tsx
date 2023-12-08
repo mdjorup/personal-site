@@ -1,10 +1,14 @@
+"use client";
+
+import classNames from "classnames";
 import Link from "next/link";
+import { useEffect, useState } from "react";
 
 interface ProjectProps {
     name: string;
     description: string;
     githubUrl: string;
-    writeupId: string;
+    writeupId?: string;
 }
 
 const ProjectItem = ({
@@ -14,38 +18,56 @@ const ProjectItem = ({
     writeupId,
 }: ProjectProps) => {
     return (
-        <div className="mb-3">
+        <div className="border-b border-gray-200 pb-3 mb-3">
             <a
                 target="_blank"
                 href={githubUrl}
-                className="text-blue-600 hover:text-blue-800 font-medium"
+                className="text-lg font-semibold text-gray-800 hover:underline"
             >
                 {name}
             </a>
-            <p className="text-gray-600">{description}</p>
+            <p className="text-sm text-gray-600 mt-1">{description}</p>
             <Link
-                href={`/projects/${writeupId}`}
-                className="inline-block bg-blue-600 text-white font-semibold py-2 px-4 rounded hover:bg-blue-700 mt-2"
+                href={writeupId ? `/projects/${writeupId}` : "#"}
+                className={classNames(
+                    "inline-block text-sm font-medium py-1 px-3 rounded mt-2",
+                    {
+                        "bg-blue-600 text-white hover:bg-blue-700 cursor-pointer":
+                            writeupId,
+                        "bg-gray-300 cursor-default pointer-events-none":
+                            !writeupId,
+                    }
+                )}
             >
-                Read More
+                Writeup
             </Link>
         </div>
     );
 };
 
 const GithubProjects = () => {
+    const [projects, setProjects] = useState<ProjectProps[]>([]);
+
+    useEffect(() => {
+        const fetchProjects = async () => {
+            const response = await fetch("/projects.json"); // Adjust the path as necessary
+            const projects = await response.json();
+            console.log(projects);
+            setProjects(projects);
+        };
+
+        fetchProjects();
+    }, []);
+
     return (
-        <div className="bg-white shadow-lg rounded-lg p-6 m-6">
-            <h2 className="text-xl font-semibold text-gray-800 mb-4">
+        <div className="bg-white p-6 m-6">
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">
                 GitHub Projects
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                <ProjectItem
-                    name={"GPT-Comment"}
-                    description="AI generated college essay commenting bot"
-                    githubUrl="https://github.com/mdjorup/gpt-comment"
-                    writeupId="sjdklfasjdf"
-                />
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {projects.map((project, index) => (
+                    <ProjectItem key={index} {...project} />
+                ))}
             </div>
         </div>
     );
