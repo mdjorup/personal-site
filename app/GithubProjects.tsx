@@ -8,15 +8,10 @@ interface ProjectProps {
     name: string;
     description: string;
     githubUrl: string;
-    writeupId?: string;
+    slug?: string;
 }
 
-const ProjectItem = ({
-    name,
-    description,
-    githubUrl,
-    writeupId,
-}: ProjectProps) => {
+const ProjectItem = ({ name, description, githubUrl, slug }: ProjectProps) => {
     return (
         <div className="border-b border-gray-200 pb-3 mb-3">
             <a
@@ -28,14 +23,13 @@ const ProjectItem = ({
             </a>
             <p className="text-sm text-gray-600 mt-1">{description}</p>
             <Link
-                href={writeupId ? `/projects/${writeupId}` : "#"}
+                href={slug ? `/projects/${slug}` : "#"}
                 className={classNames(
                     "inline-block text-sm font-medium py-1 px-3 rounded mt-2",
                     {
                         "bg-blue-600 text-white hover:bg-blue-700 cursor-pointer":
-                            writeupId,
-                        "bg-gray-300 cursor-default pointer-events-none":
-                            !writeupId,
+                            slug,
+                        "bg-gray-300 cursor-default pointer-events-none": !slug,
                     }
                 )}
             >
@@ -52,7 +46,6 @@ const GithubProjects = () => {
         const fetchProjects = async () => {
             const response = await fetch("/projects.json"); // Adjust the path as necessary
             const projects = await response.json();
-            console.log(projects);
             setProjects(projects);
         };
 
