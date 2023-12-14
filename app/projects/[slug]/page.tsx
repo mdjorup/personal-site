@@ -28,7 +28,13 @@ const getPageRecordMap = async (projectSlug: string) => {
         },
     });
 
-    const pageId = response.results[0].id;
+    const page = response.results[0];
+
+    if (page == null) {
+        return undefined;
+    }
+
+    const pageId = page.id;
 
     const recordMap = await notionAPI.getPage(pageId);
 
