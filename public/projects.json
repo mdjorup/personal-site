@@ -1,14 +1,14 @@
 [
     {
         "name": "GPT-Comment",
-        "description": "AI generated college essay commenting botsdjkafl sjdfkla sjdklf asjkldf ajklsd fjklas djfkla sdjklf",
+        "description": "AI generated college essay commenting and reviewing bot",
         "githubUrl": "https://github.com/mdjorup/gpt-comment",
         "slug": "gpt-comment"
     },
     {
-        "name": "GPT-Comment",
-        "description": "AI generated college essay commenting botsdjkafl sjdfkla sjdklf asjkldf ajklsd fjklas djfkla sdjklf",
-        "githubUrl": "https://github.com/mdjorup/gpt-comment",
+        "name": "Personal Site",
+        "description": "All the code that went into building this site.",
+        "githubUrl": "https://github.com/mdjorup/personal-site",
         "slug": ""
     }
 ]
