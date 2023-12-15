@@ -35,7 +35,16 @@ const PersonalInfo = () => {
                     About Me
                 </h2>
                 <p className="text-gray-700">
-                    This is a short bio about yourself...
+                    I&apos;m a fourth year Computer Science student at the
+                    University of Virginia. Currently working on a startup
+                    called Natively, a software tool and marketplace for native
+                    advertising networks on the internet. We&apos;re building
+                    out the MVP right now.
+                    <br />
+                    <br />
+                    In addition to coding, I like playing guitar, tennis,
+                    pickleball, poker. I also like my dogs, sports, and
+                    mountains.
                 </p>
             </div>
         </div>
