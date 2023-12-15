@@ -1,26 +1,26 @@
-"use client";
-
 import classNames from "classnames";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { getPagesByEntryType } from "./notionUtils";
 
-interface ProjectProps {
-    name: string;
-    description: string;
-    githubUrl?: string;
+export interface IProject {
+    id: string;
+    title?: string;
+    headline?: string;
+    githubLink?: string;
     slug?: string;
 }
 
-const ProjectItem = ({ name, description, githubUrl, slug }: ProjectProps) => {
+const ProjectItem = ({ id, title, headline, githubLink, slug }: IProject) => {
     return (
         <div className="border-b border-gray-200 pb-3 mb-3">
             <div className="text-lg font-semibold text-gray-800 hover:underline">
-                {name}
+                {title}
             </div>
-            <p className="text-sm text-gray-600 mt-1">{description}</p>
+            <p className="text-sm text-gray-600 mt-1">{headline}</p>
             <div>
                 <Link
-                    href={slug ? `/projects/${slug}` : "#"}
+                    href={slug ? `/projects/${slug}?id=${id}` : "#"}
+                    as={slug ? `/projects/${slug}` : "#"}
                     className={classNames(
                         "inline-block text-sm font-medium py-1 px-3 rounded mt-2",
                         {
@@ -34,14 +34,14 @@ const ProjectItem = ({ name, description, githubUrl, slug }: ProjectProps) => {
                     Writeup
                 </Link>
                 <Link
-                    href={githubUrl ?? "#"}
+                    href={githubLink ?? "#"}
                     className={classNames(
                         "inline-block text-sm font-medium py-1 px-3 rounded mt-2 ml-3",
                         {
                             "bg-green-600 text-white hover:bg-green-700 cursor-pointer":
-                                githubUrl,
+                                githubLink,
                             "bg-gray-300 cursor-default pointer-events-none":
-                                !githubUrl,
+                                !githubLink,
                         }
                     )}
                     target="_blank"
@@ -53,18 +53,8 @@ const ProjectItem = ({ name, description, githubUrl, slug }: ProjectProps) => {
     );
 };
 
-const GithubProjects = () => {
-    const [projects, setProjects] = useState<ProjectProps[]>([]);
-
-    useEffect(() => {
-        const fetchProjects = async () => {
-            const response = await fetch("/projects.json"); // Adjust the path as necessary
-            const projects = await response.json();
-            setProjects(projects);
-        };
-
-        fetchProjects();
-    }, []);
+const GithubProjects = async () => {
+    const projects = await getPagesByEntryType("Project");
 
     return (
         <div className="bg-white p-6 m-6">
