@@ -6,7 +6,12 @@ const databaseId = process.env.NOTION_DATABASE_ID ?? "";
 
 const notionAPI = new NotionAPI();
 
-export const getPageRecordMap = async (projectSlug: string) => {
+type WriteupType = "Project" | "Blog";
+
+export const getPageRecordMap = async (
+    writeupType: WriteupType,
+    slug: string
+) => {
     const response = await notion.databases.query({
         database_id: databaseId,
         filter: {
@@ -14,13 +19,13 @@ export const getPageRecordMap = async (projectSlug: string) => {
                 {
                     property: "Page Type",
                     select: {
-                        equals: "Project",
+                        equals: writeupType,
                     },
                 },
                 {
                     property: "Slug",
                     rich_text: {
-                        equals: projectSlug,
+                        equals: slug,
                     },
                 },
             ],
