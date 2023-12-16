@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import Link from "next/link";
-import { getPagesByEntryType } from "./notionUtils";
+import { getProjectPages } from "./notionUtils";
 
 export interface IProject {
     id: string;
@@ -54,7 +54,7 @@ const ProjectItem = ({ id, title, headline, githubLink, slug }: IProject) => {
 };
 
 const GithubProjects = async () => {
-    const projects = await getPagesByEntryType("Project");
+    const projects = await getProjectPages();
 
     return (
         <div className="bg-white p-6 m-6">
