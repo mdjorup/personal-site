@@ -38,9 +38,7 @@ const BlogLinks = async () => {
 
     return (
         <div className="bg-white p-6 m-6">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                Blog Links
-            </h2>
+            <h2 className="text-2xl font-bold text-gray-900 mb-6">Thoughts</h2>
             <div className="divide-y divide-gray-200">
                 {blogPosts.map((blogPost, index) => (
                     <BlogPostItem key={blogPost.id} {...blogPost} />
