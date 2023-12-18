@@ -116,7 +116,16 @@ export const getBlogPostPages = async (): Promise<IBlogPost[]> => {
 
             return details;
         })
-        .filter((project): project is IBlogPost => project !== undefined);
+        .filter((project): project is IBlogPost => project !== undefined)
+        .sort((a, b) => {
+            if (a.date > b.date) {
+                return -1;
+            } else if (a.date < b.date) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
     return blogPosts;
 };
 
@@ -146,6 +155,7 @@ export const getProjectPages = async (): Promise<IProject[]> => {
         .map((result): IProject | undefined => {
             const details: IProject = {
                 id: result.id,
+                date: new Date(),
             };
 
             const properties = (result as PageObjectResponse).properties;
@@ -181,10 +191,26 @@ export const getProjectPages = async (): Promise<IProject[]> => {
             ) {
                 details.slug = properties["Slug"].rich_text[0].plain_text;
             }
+            // date
+            if (
+                properties["Date"].type === "date" &&
+                properties["Date"].date?.start != null
+            ) {
+                details.date = properties["Date"].date.start;
+            }
 
             return details;
         })
-        .filter((project): project is IProject => project !== undefined);
+        .filter((project): project is IProject => project !== undefined)
+        .sort((a, b) => {
+            if (a.date > b.date) {
+                return -1;
+            } else if (a.date < b.date) {
+                return 1;
+            } else {
+                return 0;
+            }
+        });
 
     return projects;
 };

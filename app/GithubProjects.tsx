@@ -5,6 +5,7 @@ import { getProjectPages } from "./notionUtils";
 export interface IProject {
     id: string;
     title?: string;
+    date: string | Date;
     headline?: string;
     githubLink?: string;
     slug?: string;
