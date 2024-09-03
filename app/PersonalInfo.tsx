@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 const PersonalInfo = () => {
     return (
         <div className="bg-white p-6 m-6">
@@ -13,7 +15,7 @@ const PersonalInfo = () => {
                     michael.djorup@gmail.com
                 </a>
             </p>
-            <p className="text-gray-600">Location: Charlottesville, VA, USA</p>
+            <p className="text-gray-600">Location: Arlington, VA, USA</p>
             <div className="mt-4">
                 <a
                     href="https://github.com/mdjorup"
@@ -35,16 +37,12 @@ const PersonalInfo = () => {
                     About Me
                 </h2>
                 <p className="text-gray-700">
-                    I&apos;m a fourth year Computer Science student at the
-                    University of Virginia. Currently working on a startup
-                    called Natively, a software tool and marketplace for native
-                    advertising networks on the internet. We&apos;re building
-                    out the MVP right now.
+                    I&apos;m a software engineer building the products I want to see in the world. Recently I was working on a startup called Gruvian, a set of tools for developers to create and run their own ad networks. 
+                    Now, I do freelance software development. I&apos;m also working on a a side project <Link href={'https://nflprobabilities.com'} target="_blank">NFLProbabilities.com</Link> with the goal of viewing game probabilities and season simulations in a beautiful format.
                     <br />
                     <br />
                     In addition to coding, I like playing guitar, tennis,
-                    pickleball, poker. I also like my dogs, sports, and
-                    mountains.
+                    pickleball, poker. I also like my dogs and the NFL.
                 </p>
             </div>
         </div>
