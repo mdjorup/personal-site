@@ -1,4 +1,5 @@
 import BlogLinks from "./BlogLinks";
+import Companies from "./Companies";
 import GithubProjects from "./GithubProjects";
 import PersonalInfo from "./PersonalInfo";
 
@@ -11,6 +12,7 @@ export default function Home() {
                 <PersonalInfo />
             </div>
             <div>
+                <Companies /> 
                 <GithubProjects />
                 <BlogLinks />
             </div>

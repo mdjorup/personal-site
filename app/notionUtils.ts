@@ -2,6 +2,7 @@ import { Client } from "@notionhq/client";
 import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { NotionAPI } from "notion-client";
 import { IBlogPost } from "./BlogLinks";
+import { ICompany } from "./Companies";
 import { IProject } from "./GithubProjects";
 
 const notion = new Client({ auth: process.env.NOTION_API_KEY });
@@ -201,7 +202,7 @@ export const getProjectPages = async (): Promise<IProject[]> => {
 
             return details;
         })
-        .filter((project): project is IProject => project !== undefined)
+        .filter((project): project is IProject => project !== undefined )
         .sort((a, b) => {
             if (a.date > b.date) {
                 return -1;
@@ -213,4 +214,90 @@ export const getProjectPages = async (): Promise<IProject[]> => {
         });
 
     return projects;
+};
+
+export const getCompaniesPages = async (): Promise<ICompany[]> => {
+  const response = await notion.databases.query({
+      database_id: databaseId,
+      filter: {
+          and: [
+              {
+                  property: "Entry Type",
+                  select: {
+                      equals: "Company",
+                  },
+              },
+              {
+                  property: "Public",
+                  checkbox: {
+                      equals: true,
+                  },
+              },
+          ],
+      },
+  });
+
+  const results = response.results;
+  const projects = results
+      .map((result): ICompany | undefined => {
+          const details: ICompany = {
+              id: result.id,
+              date: new Date(),
+          };
+
+          const properties = (result as PageObjectResponse).properties;
+          if (properties == null) {
+              return undefined;
+          }
+          // title
+          if (
+            properties["Title"].type === "title" &&
+            properties["Title"].title[0] != null
+        ) {
+            details.title = properties["Title"].title[0].plain_text;
+        }
+        // headline
+        if (
+            properties["Headline"].type === "rich_text" &&
+            properties["Headline"].rich_text[0] != null
+        ) {
+            details.headline =
+                properties["Headline"].rich_text[0].plain_text;
+        }
+        // github link
+        if (
+            properties["Website Link"].type === "url" &&
+            properties["Website Link"].url != null
+        ) {
+            details.websiteLink = properties["Website Link"].url;
+        }
+        // slug
+        if (
+            properties["Slug"].type === "rich_text" &&
+            properties["Slug"].rich_text[0] != null
+        ) {
+            details.slug = properties["Slug"].rich_text[0].plain_text;
+        }
+        // date
+        if (
+            properties["Date"].type === "date" &&
+            properties["Date"].date?.start != null
+        ) {
+            details.date = properties["Date"].date.start;
+        }
+
+          return details;
+      })
+      .filter((project): project is IProject => project !== undefined)
+      .sort((a, b) => {
+          if (a.date > b.date) {
+              return -1;
+          } else if (a.date < b.date) {
+              return 1;
+          } else {
+              return 0;
+          }
+      });
+
+  return projects;
 };

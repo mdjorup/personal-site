@@ -1,18 +1,17 @@
 import classNames from "classnames";
 import Link from "next/link";
-import { getProjectPages } from "./notionUtils";
+import { getCompaniesPages } from "./notionUtils";
 
-export interface IProject {
+export interface ICompany {
     id: string;
     title?: string;
     date: string | Date;
     headline?: string;
-    githubLink?: string;
+    websiteLink?: string;
     slug?: string;
-    public?: boolean;
 }
 
-export const ProjectItem = ({ id, title, headline, githubLink, slug }: IProject) => {
+export const CompanyItem = ({ id, title, headline, websiteLink, slug }: ICompany) => {
     return (
         <div className="border-b border-gray-200 pb-3 mb-3">
             <div className="text-lg font-semibold text-gray-800 hover:underline">
@@ -36,40 +35,40 @@ export const ProjectItem = ({ id, title, headline, githubLink, slug }: IProject)
                     Writeup
                 </Link>
                 <Link
-                    href={githubLink ?? "#"}
+                    href={websiteLink ?? "#"}
                     className={classNames(
                         "inline-block text-sm font-medium py-1 px-3 rounded mt-2 ml-3",
                         {
                             "bg-green-600 text-white hover:bg-green-700 cursor-pointer":
-                                githubLink,
+                            websiteLink,
                             "bg-gray-300 cursor-default pointer-events-none":
-                                !githubLink,
+                                !websiteLink,
                         }
                     )}
                     target="_blank"
                 >
-                    GitHub
+                    Website
                 </Link>
             </div>
         </div>
     );
 };
 
-const GithubProjects = async () => {
-    const projects = await getProjectPages();
+const Companies = async () => {
+    const projects = await getCompaniesPages();
 
     return (
         <div className="bg-white p-6 m-6">
             <h2 className="text-2xl font-bold text-gray-900 mb-6">
-                GitHub Projects
+                Companies and Websites
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 {projects.map((project, index) => (
-                    <ProjectItem key={index} {...project} />
+                    <CompanyItem key={index} {...project} />
                 ))}
             </div>
         </div>
     );
 };
 
-export default GithubProjects;
+export default Companies;
